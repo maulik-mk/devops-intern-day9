@@ -1,9 +1,8 @@
-# Go to backend folder
-cd Backend || { echo "backend directory not found"; exit 1; }
+#!/bin/bash
+cd Frontend
 npm install
-npm run start &
-
-# Go to frontend folder
-cd ../Frontend || { echo "frontend directory not found"; exit 1; }
+npm run build
+cp -r dist/* ../Backend/src/public/
+cd ../Backend
 npm install
-npm run start
+node src/main.js
