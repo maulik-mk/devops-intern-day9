@@ -5,12 +5,11 @@ function App() {
   const [error, setError] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
 
-  // Initial fetch + silent auto-refresh every 5s
   useEffect(() => {
     const fetchLogs = async (silent = false) => {
       if (!silent) setError(null);
       try {
-        const res = await fetch('http://localhost:3000/logs/all');
+        const res = await fetch('/logs/all');
         if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
         const data = await res.json();
         setLogs(data);
@@ -22,10 +21,10 @@ function App() {
       }
     };
 
-    fetchLogs(); // initial load
+    fetchLogs();
 
-    const interval = setInterval(() => fetchLogs(true), 5000); // silent reload
-    return () => clearInterval(interval); // cleanup
+    const interval = setInterval(() => fetchLogs(true), 5000);
+    return () => clearInterval(interval);
   }, []);
 
   const filteredLogs = useMemo(() => {
