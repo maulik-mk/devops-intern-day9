@@ -3,16 +3,15 @@ FROM node:18-slim
 WORKDIR /app
 
 COPY Backend ./Backend
-COPY Frontend ./Frontend
-
 RUN cd Backend && npm install
-RUN cd Frontend && npm install
+
+COPY Frontend ./Frontend
+RUN cd Frontend && npm install && npm run build
+
+RUN mkdir -p Backend/public && cp -r Frontend/dist/* Backend/public/
+
+WORKDIR /app/Backend
 
 EXPOSE 3000
-EXPOSE 5173
 
-COPY start.sh .
-
-RUN chmod +x start.sh
-
-CMD ["./start.sh"]
+CMD ["node", "app.js"]
