@@ -1,17 +1,20 @@
-FROM node:18-slim
+FROM node:18 AS frontend
+WORKDIR /frontend
+COPY Frontend/package*.json ./
+RUN npm install
+COPY Frontend .
+RUN npm run build
 
+FROM node:18
 WORKDIR /app
 
+COPY Backend/package*.json ./Backend/
+RUN npm install --prefix ./Backend
 COPY Backend ./Backend
-RUN cd Backend && npm install
 
-COPY Frontend ./Frontend
-RUN cd Frontend && npm install && npm run build
+COPY --from=frontend /frontend/dist ./Backend/src/public
 
-RUN mkdir -p Backend/public && cp -r Frontend/dist/* Backend/public/
+ENV PORT=10000
+EXPOSE 10000
 
-WORKDIR /app/Backend
-
-EXPOSE 3000
-
-CMD ["node", "app.js"]
+CMD ["node", "Backend/app.js"]
