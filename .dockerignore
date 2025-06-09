@@ -1,0 +1,10 @@
+node_modules
+npm-debug.log
+.env
+.DS_Store
+.git
+.gitignore
+docker-compose.yml
+__tests__/
+*.test.js
+*.spec.js
