@@ -21,7 +21,11 @@ const __dirname = path.dirname(__filename);
 const publicPath = path.join(__dirname, 'public');
 app.use(express.static(publicPath));
 
-app.get('*', (req, res) => {
+app.use((req, res, next) => {
+  if (req.originalUrl.startsWith('/logs')) {
+    return res.status(404).json({ error: 'Not found' });
+  }
+
   res.sendFile(path.join(publicPath, 'index.html'));
 });
 
