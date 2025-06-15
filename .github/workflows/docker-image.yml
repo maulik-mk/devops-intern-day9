@@ -9,7 +9,7 @@ jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
     env:
-    MONGO_URI: ${{ secrets.MONGO_URI }}
+      MONGO_URI: ${{ secrets.MONGO_URI }}
 
     steps:
       - name: Checkout code
@@ -29,8 +29,6 @@ jobs:
 
       - name: Run backend tests
         working-directory: ./Backend
-        env:
-          MONGO_URI: ${{ secrets.MONGO_URI }}
         run: npm test
 
       - name: Install frontend dependencies
