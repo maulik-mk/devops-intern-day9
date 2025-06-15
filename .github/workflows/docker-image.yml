@@ -25,6 +25,12 @@ jobs:
         working-directory: ./Backend
         run: npm install
 
+      - name: Run backend tests
+        working-directory: ./Backend
+        env:
+          MONGO_URI: ${{ secrets.MONGO_URI }}
+        run: npm test
+
       - name: Install frontend dependencies
         working-directory: ./Frontend
         run: npm install

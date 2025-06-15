@@ -1,5 +1,15 @@
 import request from 'supertest';
 import { app } from '../src/main.js';
+import { connectDB } from '../DataBase/connectDB.js';
+import mongoose from 'mongoose';
+
+beforeAll(async () => {
+  await connectDB();
+});
+
+afterAll(async () => {
+  await mongoose.connection.close();
+});
 
 describe('Log Routes API', () => {
   it('GET /logs should return 200 with welcome message', async () => {
