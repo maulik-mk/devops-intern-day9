@@ -8,6 +8,8 @@ on:
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
+    env:
+    MONGO_URI: ${{ secrets.MONGO_URI }}
 
     steps:
       - name: Checkout code
@@ -42,10 +44,10 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Build MERN image
-        run: docker build -t maulik010101/day5-mern-pipeline:latest .
+        run: docker build -t maulik010101/maulik-day9-monitoring-stack:latest .
 
       - name: Push Docker image to Docker Hub
-        run: docker push maulik010101/day5-mern-pipeline:latest
+        run: docker push maulik010101/maulik-day9-monitoring-stack:latest
 
       - name: Trigger Render Deploy Hook
         run: curl -X POST ${{ secrets.RENDER_DEPLOY_HOOK_URL }}
