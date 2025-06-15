@@ -1,5 +1,5 @@
 import request from 'supertest';
-import { app } from '../src/main.js';
+import { app, logger } from '../src/main.js';
 import mongoose from 'mongoose';
 
 describe('Log Routes API', () => {
@@ -25,4 +25,7 @@ describe('Log Routes API', () => {
 
 afterAll(async () => {
   await mongoose.connection.close();
+  if (logger && typeof logger.end === 'function') {
+    logger.end();
+  }
 });
