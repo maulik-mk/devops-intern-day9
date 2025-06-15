@@ -1,15 +1,6 @@
 import request from 'supertest';
 import { app } from '../src/main.js';
-import { connectDB } from '../DataBase/connectDB.js';
 import mongoose from 'mongoose';
-
-beforeAll(async () => {
-  await connectDB();
-});
-
-afterAll(async () => {
-  await mongoose.connection.close();
-});
 
 describe('Log Routes API', () => {
   it('GET /logs should return 200 with welcome message', async () => {
@@ -27,7 +18,11 @@ describe('Log Routes API', () => {
   });
 
   it('GET /unknown should return 404', async () => {
-    const res = await request(app).get('/unknown');
+    const res = await request(app).get('/logs/unknown');
     expect(res.statusCode).toBe(404);
   });
+});
+
+afterAll(async () => {
+  await mongoose.connection.close();
 });
